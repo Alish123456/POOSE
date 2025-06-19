@@ -1,0 +1,41 @@
+@startuml
+
+class Game {
+    - id : int
+    - players : Player[*]
+    - currentPlayer : int
+    + placeShip(playerId, shipType, x, y, horizontal) : bool
+    + makeMove(playerId, x, y) : bool
+    + getState() : string
+}
+
+class Player {
+    - name : string
+    - board : Grid
+    - opponentView : Grid
+    - ships : Ship[*]
+    + hasLost() : bool
+}
+
+class Grid {
+    - cells : int[][]
+    + placeShip(x, y, length, horizontal) : bool
+    + shootAt(x, y) : int
+    + print() : void
+}
+
+class Ship {
+    - size : int
+    - hits : int
+    - sunk : bool
+    + registerHit() : void
+    + isSunk() : bool
+}
+
+Game "1" o-- "*" Player
+Player "1" o-- "1" Grid : board
+Player "1" o-- "1" Grid : opponentView
+Player "1" o-- "*" Ship
+Grid "1" o-- "*" Ship
+
+@enduml
